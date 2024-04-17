@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native-web";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container : {
@@ -6,11 +6,11 @@ export const styles = StyleSheet.create({
         justifyContent : 'center',
         alignItems: 'center',
     },
-
-    text : {
-        fontSize: 20,
-        color: 'darkslateblue',
-
+   
+    innerContainer:{
+        paddingHorizontal: 20,
+        alignSelf: "stretch",
     },
+
     
 });
