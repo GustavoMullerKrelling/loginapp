@@ -9,6 +9,8 @@ export default function HomeScreen({ navigation }) {
         onPress={() => {
           navigation.navigate("LoginScreen");
         }}
+
+        mode="contained"
       >
         Login
       </Button>
