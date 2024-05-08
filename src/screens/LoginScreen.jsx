@@ -9,9 +9,20 @@ export default function LoginScreen({ navigation }) {
 
   function realizaLogin() {
     console.log("Fazer Login");
+    if (email === "") {
+      setErro({ ...erro, email: true });
+    } else {
+      setErro({ ...erro, email: false });
+    }
+    if (senha === "") {
+      setErro({ ...erro, senha: true });
+    } else {
+      setErro({ ...erro, senha: false });
+    }
   }
 
   return (
+    <Surface style={styles.container}>
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Text
@@ -46,5 +57,6 @@ export default function LoginScreen({ navigation }) {
         </Button>
       </View>
     </View>
+    </Surface>
   );
 }
