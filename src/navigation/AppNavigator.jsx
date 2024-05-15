@@ -17,11 +17,12 @@ export default function AppNavigator() {
             title: "Login",
           }}
         />
-            <Stack.Screen
+        
+        <Stack.Screen
           name="RegisterScreen"
           component={RegisterScreen}
           options={{
-            title: "Registro",
+            title: "Inicial",
           }}
         />
         <Stack.Screen

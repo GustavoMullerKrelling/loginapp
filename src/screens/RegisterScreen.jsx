@@ -2,6 +2,9 @@ import { View } from "react-native";
 import { Button, Surface, Text, TextInput } from "react-native-paper";
 import { useState } from "react";
 import { styles } from "../config/styles";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../config/firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -66,9 +69,45 @@ export default function RegisterScreen({ navigation }) {
     setErro({ ...erro, estado: false });
 
     // 2) Validar se as senhas são iguais
+    if (senha !== repetirSenha) {
+      setErro({ ...erro, senha: true, repetirSenha: true });
+      return;
+    }
+    setErro({ ...erro, senha: false, repetirSenha: false });
+
+    cadastrarNoFirebase();
+
     // 3) Enviar os dados para a API do Firestore junto ao Firebase Auth
     // 4) Tratar os erros
     // 5) Redirecionar para a tela de Login
+  }
+
+  // se for usar o ChatGPT lembre de dizer "use a versão MODULAR do Firebase ou Docs 8+"
+  async function cadastrarNoFirebase() {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
+      const user = userCredential.user;
+      console.log("Usuário cadastrado", user);
+
+      const collectionRef = collection(db, "usuarios");
+
+      const docRef = await setDoc(
+        doc(collectionRef, user.uid), // função doc que dirá a uid do user como "chave primaria"
+        {
+          nome: nome,
+          logradouro: logradouro,
+          cep: cep,
+          cidade: cidade,
+          estado: estado,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function buscaCEP() {
